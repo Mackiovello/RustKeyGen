@@ -4,13 +4,13 @@ mod options;
 
 use clap::{App, Arg};
 
-use self::options::Options;
+use self::options::CommandOptions;
 
 fn main() {
     let matches = App::new("KeyGen")
         .version("0.1")
         .about("Generates keys and passwords.")
-        .arg(Arg::with_name("directory").short("a").long("ascii").help(
+        .arg(Arg::with_name("ascii").short("a").long("ascii").help(
             "Generates a key of ASCII characters, ranging from '!' to'~' (default)",
         ))
         .arg(
@@ -49,5 +49,6 @@ fn main() {
         )
         .get_matches();
 
-    Options::from_args(matches);
+    let options = CommandOptions::from_args(matches);
+    println!("{:?}", options);
 }
