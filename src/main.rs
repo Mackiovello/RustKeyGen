@@ -1,9 +1,13 @@
 extern crate clap;
 
+mod options;
+
 use clap::{App, Arg};
 
+use self::options::Options;
+
 fn main() {
-    App::new("KeyGen")
+    let matches = App::new("KeyGen")
         .version("0.1")
         .about("Generates keys and passwords.")
         .arg(Arg::with_name("directory").short("a").long("ascii").help(
@@ -34,6 +38,7 @@ fn main() {
                 .short("l")
                 .long("length")
                 .value_name("n")
+                .default_value("8")
                 .help("Generates a key of <n> bytes length"),
         )
         .arg(
@@ -43,4 +48,6 @@ fn main() {
                 .help("Shows only the key"),
         )
         .get_matches();
+
+    Options::from_args(matches);
 }
