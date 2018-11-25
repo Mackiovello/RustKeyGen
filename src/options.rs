@@ -22,11 +22,11 @@ impl CommandOptions {
             // "length" will always have a value,
             // but it's not guaranteed to be a u16.
             key_length: args.value_of("length").unwrap().parse().unwrap(),
-            format: CommandOptions::format_from_args(args),
+            format: CommandOptions::format_from_args(&args),
         }
     }
 
-    fn format_from_args(args: clap::ArgMatches) -> Format {
+    fn format_from_args(args: &clap::ArgMatches) -> Format {
         // I don't think this is the best way to
         // do this, but this is how it's done in
         // the original KeyGen. I'd rather
