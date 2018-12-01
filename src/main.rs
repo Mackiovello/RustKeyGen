@@ -41,7 +41,9 @@ fn main() {
                 .help("Generates a key of <n> length"))
         .get_matches();
 
-    let options = CommandOptions::from_args(&matches);
-    let key = key_generator::generate_key(&options.format, options.key_length);
-    println!("{}", key);
+    let result = match CommandOptions::from_args(&matches) {
+        Ok(options) => key_generator::generate_key(&options),
+        Err(e) => format!("Error: {}", e),
+    };
+    println!("{}", result);
 }

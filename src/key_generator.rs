@@ -2,13 +2,13 @@ use rand::distributions::Alphanumeric;
 use rand::Rng;
 use std::iter;
 
-use super::options::Format;
+use super::options::{CommandOptions, Format};
 
-pub fn generate_key(format: &Format, length: usize) -> String {
-    match format {
-        Format::AlphaNumeric => generate_alphanumeric_key(length),
-        Format::Ascii => generate_ascii_key_from_range(length, 33, 126),
-        Format::AsciiBlanks => generate_ascii_key_from_range(length, 32, 126),
+pub fn generate_key(options: &CommandOptions) -> String {
+    match options.format {
+        Format::AlphaNumeric => generate_alphanumeric_key(options.key_length),
+        Format::Ascii => generate_ascii_key_from_range(options.key_length, 33, 126),
+        Format::AsciiBlanks => generate_ascii_key_from_range(options.key_length, 32, 126),
     }
 }
 
@@ -35,24 +35,28 @@ mod tests {
     #[test]
     fn generates_alphanumeric_with_length() {
         //given
-        let format = Format::AlphaNumeric;
-        let length = 9;
+        let options = CommandOptions {
+            format: Format::AlphaNumeric,
+            key_length: 9,
+        };
 
         //when
-        let key = generate_key(&format, length);
+        let key = generate_key(&options);
 
         //then
-        assert_eq!(key.len(), length as usize);
+        assert_eq!(key.len(), options.key_length);
     }
 
     #[test]
     fn generates_alphanumeric_with_only_alphanumeric_chars() {
         //given
-        let format = Format::AlphaNumeric;
-        let length = 7;
+        let options = CommandOptions {
+            format: Format::AlphaNumeric,
+            key_length: 7,
+        };
 
         //when
-        let key = generate_key(&format, length);
+        let key = generate_key(&options);
 
         //then
         assert!(key.chars().all(char::is_alphanumeric));

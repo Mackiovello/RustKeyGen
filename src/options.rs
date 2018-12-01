@@ -1,6 +1,5 @@
 #[derive(Debug)]
 pub struct CommandOptions {
-    pub short_output: bool,
     pub key_length: usize,
     pub format: Format,
 }
@@ -13,16 +12,23 @@ pub enum Format {
 }
 
 impl CommandOptions {
-    pub fn from_args(args: &clap::ArgMatches) -> CommandOptions {
-        CommandOptions {
-            short_output: args.is_present("short"),
+    pub fn from_args(args: &clap::ArgMatches) -> Result<CommandOptions, String> {
+        let length = match args.value_of("length").unwrap().parse() {
+            Ok(v) => v,
+            Err(_) => return Err("The length has to be a number.".to_owned()),
+        };
 
+        if length == 0 {
+            return Err("The length has to be larger than 0.".to_owned());
+        }
+
+        Ok(CommandOptions {
             // Deal with these unwraps
             // "length" will always have a value,
             // but it's not guaranteed to be a u16.
-            key_length: args.value_of("length").unwrap().parse().unwrap(),
+            key_length: length,
             format: CommandOptions::format_from_args(&args),
-        }
+        })
     }
 
     fn format_from_args(args: &clap::ArgMatches) -> Format {
