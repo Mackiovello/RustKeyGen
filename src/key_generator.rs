@@ -1,6 +1,5 @@
 use rand::distributions::Alphanumeric;
 use rand::Rng;
-use std::iter;
 
 use super::options::{CommandOptions, Format};
 
@@ -14,18 +13,14 @@ pub fn generate_key(options: &CommandOptions) -> String {
 
 fn generate_ascii_key_from_range(length: usize, start: u16, end: u16) -> String {
     let mut rng = rand::thread_rng();
-    iter::repeat(())
-        .map(|()| rng.gen_range(start, end) as u8 as char)
-        .take(length)
+    (0..length)
+        .map(|_| rng.gen_range(start, end) as u8 as char)
         .collect()
 }
 
 fn generate_alphanumeric_key(length: usize) -> String {
     let mut rng = rand::thread_rng();
-    iter::repeat(())
-        .map(|()| rng.sample(Alphanumeric))
-        .take(length)
-        .collect()
+    (0..length).map(|_| rng.sample(Alphanumeric)).collect()
 }
 
 #[cfg(test)]
