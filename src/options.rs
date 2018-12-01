@@ -9,7 +9,6 @@ pub struct CommandOptions {
 pub enum Format {
     Ascii,
     AsciiBlanks,
-    AsciiReduced,
     AlphaNumeric,
 }
 
@@ -37,8 +36,6 @@ impl CommandOptions {
             Format::Ascii
         } else if args.is_present("ascii_blank") {
             Format::AsciiBlanks
-        } else if args.is_present("ascii_reduced") {
-            Format::AsciiReduced
         } else if args.is_present("alphanum") {
             Format::AlphaNumeric
         } else {

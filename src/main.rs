@@ -6,7 +6,7 @@ mod options;
 
 use clap::{App, Arg};
 
-use self::options::{CommandOptions, Format};
+use self::options::CommandOptions;
 
 fn main() {
     let matches = App::new("KeyGen")
@@ -38,16 +38,10 @@ fn main() {
                 .long("length")
                 .value_name("n")
                 .default_value("8")
-                .help("Generates a key of <n> bytes length"))
-        .arg(
-            Arg::with_name("short")
-                .short("s")
-                .long("short")
-                .help("Shows only the key"))
+                .help("Generates a key of <n> length"))
         .get_matches();
 
     let options = CommandOptions::from_args(&matches);
-    println!("{:?}", options);
     let key = key_generator::generate_key(&options.format, options.key_length);
     println!("{}", key);
 }

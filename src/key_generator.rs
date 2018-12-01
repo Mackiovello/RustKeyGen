@@ -1,5 +1,5 @@
 use rand::distributions::Alphanumeric;
-use rand::{thread_rng, Rng};
+use rand::Rng;
 use std::iter;
 
 use super::options::Format;
@@ -7,21 +7,15 @@ use super::options::Format;
 pub fn generate_key(format: &Format, length: usize) -> String {
     match format {
         Format::AlphaNumeric => generate_alphanumeric_key(length),
-        Format::Ascii => generate_ascii_key_without_blanks(length),
-        _ => panic!(),
+        Format::Ascii => generate_ascii_key_from_range(length, 33, 126),
+        Format::AsciiBlanks => generate_ascii_key_from_range(length, 32, 126),
     }
-
-    // let mut rng = rand::thread_rng();
-    // let mut data: [u8; 3] = [0; 3];
-    // rng.fill_bytes(&mut data);
-    // println!("{:?}", data);
-    // str::from_utf8(&data).unwrap().to_owned()
 }
 
-fn generate_ascii_key_without_blanks(length: usize) -> String {
+fn generate_ascii_key_from_range(length: usize, start: u16, end: u16) -> String {
     let mut rng = rand::thread_rng();
     iter::repeat(())
-        .map(|()| rng.gen_range(33, 126) as u8 as char)
+        .map(|()| rng.gen_range(start, end) as u8 as char)
         .take(length)
         .collect()
 }
