@@ -15,7 +15,6 @@ FLAGS:
     -a, --ascii            Generates a key of ASCII characters, ranging from '!' to'~' (default)
     -w, --ascii-blank      Generates a key of ASCII characters, ranging from ' ' to'~'; same as --ascii, but includes
                            blanks
-    -r, --ascii-reduced    Generates a key of reduced ASCII
     -h, --help             Prints help information
     -V, --version          Prints version information
 

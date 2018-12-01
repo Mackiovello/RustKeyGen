@@ -23,11 +23,6 @@ fn main() {
                 .long("ascii-blank")
                 .help("Generates a key of ASCII characters, ranging from ' ' to'~'; same as --ascii, but includes blanks"))
         .arg(
-            Arg::with_name("ascii_reduced")
-                .short("r")
-                .long("ascii-reduced")
-                .help("Generates a key of reduced ASCII"))
-        .arg(
             Arg::with_name("alphanum")
                 .short("p")
                 .long("alphanum")
