@@ -1,10 +1,12 @@
 extern crate clap;
+extern crate rand;
 
+mod key_generator;
 mod options;
 
 use clap::{App, Arg};
 
-use self::options::CommandOptions;
+use self::options::{CommandOptions, Format};
 
 fn main() {
     let matches = App::new("KeyGen")
@@ -44,6 +46,8 @@ fn main() {
                 .help("Shows only the key"))
         .get_matches();
 
-    let options = CommandOptions::from_args(matches);
+    let options = CommandOptions::from_args(&matches);
     println!("{:?}", options);
+    let key = key_generator::generate_key(&options.format, options.key_length);
+    println!("{}", key);
 }

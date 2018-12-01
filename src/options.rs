@@ -1,7 +1,7 @@
 #[derive(Debug)]
 pub struct CommandOptions {
     pub short_output: bool,
-    pub key_length: u16,
+    pub key_length: usize,
     pub format: Format,
 }
 
@@ -14,7 +14,7 @@ pub enum Format {
 }
 
 impl CommandOptions {
-    pub fn from_args(args: clap::ArgMatches) -> CommandOptions {
+    pub fn from_args(args: &clap::ArgMatches) -> CommandOptions {
         CommandOptions {
             short_output: args.is_present("short"),
 
